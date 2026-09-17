@@ -1,11 +1,14 @@
 package com.projects.lovable_clone.service;
 
+import com.projects.lovable_clone.Dto.project.ProjectRequest;
+import com.projects.lovable_clone.Dto.project.ProjectResponse;
 import com.projects.lovable_clone.Dto.project.ProjectSummaryResponse;
 import com.projects.lovable_clone.entity.ProjectEntity;
 import com.projects.lovable_clone.entity.UserEntity;
 import com.projects.lovable_clone.repository.ProjectRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,56 +25,20 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
-    private final EntityManager entityManager;
 
-    @Transactional
-    public ProjectSummaryResponse createProject(ProjectSummaryResponse projectDto) {
-        ProjectEntity project = modelMapper.map(projectDto, ProjectEntity.class);
-        project.setId(null);
-        setProjectUser(project, projectDto.getUserId());
-        Instant now = Instant.now();
-        project.setCreatedAt(now);
-        project.setUpdatedAt(now);
-        return toDto(projectRepository.save(project));
+
+    public @Nullable List<ProjectSummaryResponse> getAllProjects(Long userId) {
     }
 
-    @Transactional(readOnly = true)
-    public List<ProjectSummaryResponse> getAllProjects(Long userId) {
-        return projectRepository.findAll().stream().map(this::toDto).toList();
+    public @Nullable ProjectResponse getProjectById(Long id, Long userId) {
     }
 
-    @Transactional(readOnly = true)
-    public ProjectSummaryResponse getProjectById(Long id) {
-        return toDto(findProject(id));
+    public @Nullable ProjectResponse createProject(ProjectRequest request, Long userId) {
     }
 
-    @Transactional
-    public ProjectSummaryResponse updateProject(Long id, ProjectSummaryResponse projectDto) {
-        ProjectEntity project = findProject(id);
-        modelMapper.map(projectDto, project);
-        project.setId(id);
-        setProjectUser(project, projectDto.getUserId());
-        project.setUpdatedAt(Instant.now());
-        return toDto(projectRepository.save(project));
+    public @Nullable ProjectResponse updateProject(Long id, ProjectRequest request, Long userId) {
     }
 
-    @Transactional
-    public void deleteProject(Long id) {
-        projectRepository.delete(findProject(id));
-    }
-
-    private ProjectEntity findProject(Long id) {
-        return projectRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Project not found"));
-    }
-
-    private void setProjectUser(ProjectEntity project, Long userId) {
-        project.setUser(userId == null ? null : entityManager.getReference(UserEntity.class, userId));
-    }
-
-    private ProjectSummaryResponse toDto(ProjectEntity project) {
-        ProjectSummaryResponse projectDto = modelMapper.map(project, ProjectSummaryResponse.class);
-        projectDto.setUserId(project.getUser() == null ? null : project.getUser().getId());
-        return projectDto;
+    public void softdelete(Long id, Long userId) {
     }
 }
