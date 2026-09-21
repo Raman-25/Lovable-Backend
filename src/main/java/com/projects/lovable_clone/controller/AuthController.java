@@ -7,20 +7,23 @@ import com.projects.lovable_clone.Dto.auth.SignupRequest;
 import com.projects.lovable_clone.Dto.auth.UserProfileResponse;
 import com.projects.lovable_clone.service.AuthService;
 import com.projects.lovable_clone.service.UserService;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AuthController {
 
-    private AuthService authService;
-    private UserService userService;
+    AuthService authService;
+    UserService userService;
 
     @GetMapping("/signup")
-    public ResponseEntity<AuthResponse>signup(SignupRequest request){
+    public ResponseEntity<AuthResponse>signup(@RequestBody SignupRequest request){
         return ResponseEntity.ok(authService.signup(request));
     }
 

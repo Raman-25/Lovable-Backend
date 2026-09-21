@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.time.Instant;
@@ -15,6 +17,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectEntity {
 
@@ -22,16 +25,22 @@ public class ProjectEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(nullable = false)
     String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    UserEntity user;
+    @JoinColumn(name = "user_id",nullable = false)
+    UserEntity owner;
 
-    Boolean isPublic;
+    Boolean isPublic = false;
 
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     Instant createdAt;
+
+    @UpdateTimestamp
     Instant updatedAt;
+
     Instant deletedAt;
 
 

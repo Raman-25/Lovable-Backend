@@ -23,7 +23,7 @@ public class SubscriptionEntity {
         @ManyToOne
         UserEntity user;
 
-        @ManyToMany
+        @ManyToOne
         PlanEntity plan;
 
         SubscriptionStatus status; //used enum

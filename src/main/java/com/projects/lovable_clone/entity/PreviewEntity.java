@@ -20,7 +20,8 @@ public class PreviewEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     UserEntity user_id;
 
     String namespace;

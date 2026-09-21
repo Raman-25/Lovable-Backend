@@ -21,10 +21,12 @@ public class UsageLogEntity {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         Long id;
 
-        @Column(name = "project_id")
+        @ManyToOne
+        @JoinColumn(name = "project_id")
         ProjectEntity project_id;
 
-        @Column(name = "user_id")
+        @ManyToOne
+        @JoinColumn(name = "user_id")
         UserEntity user_id;
 
         String action;

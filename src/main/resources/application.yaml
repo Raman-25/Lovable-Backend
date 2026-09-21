@@ -1,4 +1,24 @@
 spring:
   application:
-    name: lovable-clone
-    description: this is application
+    name: lovable_clone
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lovable_clone
+    username: postgres
+    password: raman1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    # defer-datasource-initialization: true  #uncomment together with sql.init.mode when using data.sql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  # Run data.sql after Hibernate creates tables (uncomment when you add a data.sql)
+  # sql:
+  #   init:
+  #     mode: always

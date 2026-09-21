@@ -17,7 +17,8 @@ public class ProjectMemberEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "project_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     UserEntity user_id;
 
 }

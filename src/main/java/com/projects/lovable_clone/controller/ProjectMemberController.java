@@ -3,15 +3,13 @@ package com.projects.lovable_clone.controller;
 
 import com.projects.lovable_clone.Dto.Member.InviteMemberRequest;
 import com.projects.lovable_clone.Dto.Member.MemberResponse;
-import com.projects.lovable_clone.Dto.Member.UpdateMemberRequest;
-import com.projects.lovable_clone.Dto.project.ProjectResponse;
+import com.projects.lovable_clone.Dto.Member.UpdateMemberRoleRequest;
 import com.projects.lovable_clone.service.ProjectMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.midi.VoiceStatus;
 import java.util.List;
 
 @RestController
@@ -35,10 +33,10 @@ public class ProjectMemberController {
                 .body(projectMemberService.inviteByEmail(projectId,userId,request));
     }
 
-    @PatchMapping("{/memberId}")
+    @PatchMapping("{memberId}")
     public ResponseEntity<MemberResponse> updateMemberRole(@PathVariable Long projectId,
                                                            @PathVariable Long memberId,
-                                                           @PathVariable UpdateMemberRequest request){
+                                                           @PathVariable UpdateMemberRoleRequest request){
         Long userId = 1L;
         return ResponseEntity.ok(projectMemberService.updateMemberRole(projectId,userId,memberId,request));
     }

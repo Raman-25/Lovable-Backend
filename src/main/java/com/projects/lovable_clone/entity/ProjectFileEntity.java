@@ -20,6 +20,8 @@ public class ProjectFileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id")
     ProjectEntity project;          // FK
 
     @Column(unique = true)
@@ -27,8 +29,12 @@ public class ProjectFileEntity {
 
     String minioObjectKey;
 
-    UserEntity createdBy;           // FK
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    UserEntity createdBy;         // FK
 
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
     UserEntity updatedBy;           // FK
 
     Instant createdAt;
