@@ -1,6 +1,7 @@
 package com.projects.lovable_clone.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -35,10 +36,12 @@ public class ProjectEntity {
     Boolean isPublic = false;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false, updatable = false)
     Instant createdAt;
 
     @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd")
     Instant updatedAt;
 
     Instant deletedAt;

@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/projects/{projectId}/members")
 public class ProjectMemberController {
 
-    private ProjectMemberService projectMemberService;
+    private final ProjectMemberService projectMemberService;
 
     @GetMapping
     public ResponseEntity<List<MemberResponse>> getProjectMembers(@PathVariable Long projectId){
@@ -36,7 +36,7 @@ public class ProjectMemberController {
     @PatchMapping("{memberId}")
     public ResponseEntity<MemberResponse> updateMemberRole(@PathVariable Long projectId,
                                                            @PathVariable Long memberId,
-                                                           @PathVariable UpdateMemberRoleRequest request){
+                                                           @RequestBody UpdateMemberRoleRequest request){
         Long userId = 1L;
         return ResponseEntity.ok(projectMemberService.updateMemberRole(projectId,userId,memberId,request));
     }

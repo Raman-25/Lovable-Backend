@@ -1,8 +1,12 @@
 package com.projects.lovable_clone.entity;
 
+import com.projects.lovable_clone.enums.ProjectRole;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @Table(name = "project_member")
@@ -10,15 +14,28 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProjectMemberEntity {
+public class ProjectMemberEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @EmbeddedId
+    ProjectMemberId id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    UserEntity user_id;
+    @MapsId("projectId")
+    ProjectEntity project;
+
+    @ManyToOne
+    @MapsId("userId")
+    UserEntity user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    ProjectRole projectRole;
+
+    Instant invitedAt;
+    Instant acceptedAt;
+
+
 
 }

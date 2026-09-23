@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface ProjectService {
 
-    @Nullable List<ProjectSummaryResponse> getAllProjects(Long userId);
+    List<ProjectSummaryResponse> getAllProjects(Long userId);
 
-    @Nullable ProjectResponse getProjectById(Long id, Long userId);
+   ProjectResponse getProjectById(Long id, Long userId);
 
-    @Nullable ProjectResponse createProject(ProjectRequest request, Long userId);
+   ProjectResponse createProject(ProjectRequest request, Long userId);
 
-    @Nullable ProjectResponse updateProject(Long id, ProjectRequest request, Long userId);
+   ProjectResponse updateProject(Long id, ProjectRequest request, Long userId);
 
     void softdelete(Long id, Long userId);
 }
